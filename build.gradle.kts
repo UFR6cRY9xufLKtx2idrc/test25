@@ -68,12 +68,17 @@ fun Project.configureBaseExtension() {
         }
 
         buildTypes {
-            all {
-                signingConfig = config ?: signingConfigs["debug"]
-            }
             named("release") {
                 isMinifyEnabled = true
-                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+                val releaseSig = signingConfigs.findByName("release")
+                signingConfig = if (releaseSig != null) releaseSig else {
+                    println("use debug signing config")
+                    signingConfigs["debug"]
+                }
             }
         }
 
