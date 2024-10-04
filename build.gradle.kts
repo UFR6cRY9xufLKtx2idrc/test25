@@ -36,7 +36,6 @@ val androidSourceCompatibility = JavaVersion.VERSION_21
 val androidTargetCompatibility = JavaVersion.VERSION_21
 
 val localProperties = Properties()
-localProperties.load(file("local.properties").inputStream())
 val officialBuild by extra(localProperties.getProperty("officialBuild", "false") == "true")
 
 tasks.register("clean", Delete::class) {
